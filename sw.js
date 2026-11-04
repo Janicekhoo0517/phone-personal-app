@@ -1,5 +1,5 @@
-const CACHE = 'daybook-shell-v16';
-const FILES = ['./', './index.html', './manifest.json', './icon-180.png', './icon-192.png', './eddga.gif', './town-background.png', './teddy-bear.gif', './dental-jokes.js'];
+const CACHE = 'daybook-shell-v17';
+const FILES = ['./', './index.html', './manifest.json', './icon-180.png', './icon-192.png', './eddga.gif', './town-background.png', './teddy-bear.gif', './dental-jokes.js', './idle-sprite.png', './walk-sprite.png'];
 self.addEventListener('install', event => event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(FILES))));
 self.addEventListener('activate', event => event.waitUntil(caches.keys().then(keys => Promise.all(keys.filter(key => key !== CACHE).map(key => caches.delete(key))))));
 self.addEventListener('fetch', event => {
