@@ -220,7 +220,7 @@ body{display:block;min-height:100dvh;margin:0;background:#d9dee1;color:var(--ink
 
 /* ASCII shark illustration based on stackedlol/ascii-sharks (MIT); see THIRD_PARTY_NOTICES.md. */
 body{background:#071b2a}
-#asciiSharksBg{position:fixed;inset:0;z-index:0;width:100vw;height:100vh;display:block;pointer-events:none}
+#asciiSharksBg{position:fixed;inset:0;z-index:2;width:100vw;height:100vh;display:block;pointer-events:none;opacity:.18}
 .phone{z-index:1;isolation:isolate;background:transparent!important}
 .phone:before{content:"";position:absolute;inset:0;z-index:-1;background:url("felt-cream.jpg") center/170px 130px repeat;opacity:.5;pointer-events:none}
 body.rain{background:#071b2a}
@@ -264,7 +264,7 @@ const shark=[
 "                            ."
 ],cols=Math.max(...shark.map(s=>s.length));let w=0,h=0,dpr=1,raf=0;
 function resize(){w=innerWidth;h=innerHeight;dpr=Math.min(devicePixelRatio||1,2);canvas.width=Math.round(w*dpr);canvas.height=Math.round(h*dpr);canvas.style.width=w+"px";canvas.style.height=h+"px";if(reduced.matches)draw(0)}
-function draw(t){ctx.setTransform(dpr,0,0,dpr,0,0);ctx.fillStyle="#071b2a";ctx.fillRect(0,0,w,h);const base=Math.min(9,Math.max(6,w/(cols+8)));
+function draw(t){ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,w,h);const base=Math.min(9,Math.max(6,w/(cols+8)));
 [{scale:1,y:.18,speed:1,phase:(w+cols*base*.62)*.46,alpha:.62},{scale:.75,y:.62,speed:-.68,phase:w*.55,alpha:.5}].forEach(p=>{const size=base*p.scale;ctx.font="600 "+size+"px ui-monospace,SFMono-Regular,Menlo,monospace";ctx.textBaseline="top";ctx.fillStyle="rgba(111,199,214,"+p.alpha+")";const blockW=ctx.measureText("M").width*cols,blockH=shark.length*size*1.12,span=w+blockW,travel=((t*.022*p.speed+p.phase)%span+span)%span,x=p.speed>0?travel-blockW:w-travel,y=Math.max(8,Math.min(h-blockH-8,h*p.y));shark.forEach((line,i)=>ctx.fillText(line,x,y+i*size*1.12))})}
 function tick(t){draw(t);if(!reduced.matches&&!document.hidden)raf=requestAnimationFrame(tick)}
 window.addEventListener("resize",resize,{passive:true});document.addEventListener("visibilitychange",()=>{cancelAnimationFrame(raf);if(!document.hidden&&!reduced.matches)raf=requestAnimationFrame(tick)});reduced.addEventListener("change",()=>{cancelAnimationFrame(raf);if(reduced.matches)draw(0);else raf=requestAnimationFrame(tick)});resize();if(!reduced.matches)raf=requestAnimationFrame(tick)
